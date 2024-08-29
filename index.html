@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="page">
+      <div class="circle"></div>
+      <div class="section"></div>
+    </div>
+    <div class="page"></div>
+
+    <script>
+      const circle = document.querySelector('.circle')
+      const page = document.querySelector('.page')
+      let mouseX = 0,
+        mouseY = 0
+      let circleX = 0,
+        circleY = 0
+
+      page.addEventListener('mousemove', (e) => {
+        const rect = page.getBoundingClientRect()
+        mouseX = e.clientX - rect.left
+        mouseY = e.clientY - rect.top
+      })
+
+      function animate() {
+        circleX += (mouseX - circleX) * 0.1
+        circleY += (mouseY - circleY) * 0.1
+
+        const maxX = page.clientWidth - circle.offsetWidth / 2
+        const maxY = page.clientHeight - circle.offsetHeight / 2
+
+        circle.style.left = `${
+          Math.max(circle.offsetWidth / 2, Math.min(circleX, maxX)) -
+          circle.offsetWidth / 2
+        }px`
+        circle.style.top = `${
+          Math.max(circle.offsetHeight / 2, Math.min(circleY, maxY)) -
+          circle.offsetHeight / 2
+        }px`
+
+        requestAnimationFrame(animate)
+      }
+
+      animate()
+    </script>
+  </body>
+</html>
